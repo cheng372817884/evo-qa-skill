@@ -53,13 +53,8 @@ Evo QA is an **agent skill** designed to run inside a compatible agent host (e.g
 
 ### Install the skill
 
-```bash
-# Via agentskills.io (recommended)
-copaw skill install evo-qa
-
-# Or clone and configure manually
-git clone https://github.com/cheng372817884/evo-qa-skill.git
-```
+1. [Download the latest ZIP](https://github.com/cheng372817884/evo-qa-skill/archive/refs/heads/main.zip)
+2. Extract and import the folder into your AI client as a skill
 
 ### Use it
 

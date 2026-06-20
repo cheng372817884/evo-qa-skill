@@ -69,15 +69,8 @@ Evo QA 是一个 **Agent 技能**，运行在兼容的 Agent 主机中（例如 
 
 ### 安装技能
 
-```bash
-# 通过 agentskills.io 安装（推荐）
-copaw skill install evo-qa
-
-# 或手动克隆配置
-git clone https://github.com/cheng372817884/evo-qa-skill.git
-```
-
-### 使用方式
+1. [下载最新 ZIP 包](https://github.com/cheng372817884/evo-qa-skill/archive/refs/heads/main.zip)
+2. 解压后以 skill 方式导入到你的 AI 客户端即可
 
 安装后，对你的 Agent 主机说一句：
 
