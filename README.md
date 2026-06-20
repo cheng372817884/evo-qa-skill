@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License">
-  <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python">
+  <img src="https://img.shields.io/badge/Python-3.9%2B-blue" alt="Python">
   <img src="https://img.shields.io/badge/status-beta-yellow" alt="Status">
 </p>
 
@@ -13,18 +13,23 @@
 
 ---
 
-## Why Evo QA?
+## What is Evo QA?
 
-Most QA automation is **write once, maintain forever**. You write tests, the app changes, tests break, you fix them. Repeat forever.
+Evo QA is an **AI agent skill** — a reusable intelligence package for AI coding tools (Claude Code, Cursor, Copilot, and any agentskills.io-compatible host).
 
-Evo QA flips the model:
+**You don't run commands. Your AI does.**
 
-- **Feeds on your docs and screenshots** — give it a spec, it plans tests
-- **Runs Playwright** — executes tests, captures evidence, diagnoses failures
-- **Learns your app** — distills page objects, forms opinions about how things work
-- **Remembers across projects** — carries experience so each new project starts smarter than the last
+Think of it as a **junior QA engineer you're mentoring**. You describe what to test in natural language — just a sentence or two, no formal test case format needed. The AI takes it from there:
 
-It's built for **SDETs, QA engineers, and agent-first teams** who want a QA companion that gets better over time.
+- **Proactively explores** every page of your app — buttons, forms, navigation, modals — building a mental model of how things work
+- **Records real business scenarios and workflows** — not just isolated test cases, but the actual paths users take through your application
+- **Generates reusable Playwright scripts** — after each run, it distills what it learned into ready-to-run Playwright test code you can check into your repo
+- **Learns on the job** — every run, every bug, every new page adds to its understanding. The more you use it, the sharper it gets
+- **Carries experience across projects** — what it learned from App A makes it better at testing App B from day one
+
+It's like training an intern who never forgets, never needs a vacation, and gets exponentially more valuable the longer you work with it.
+
+The only requirement is **Python 3.9+**. Your AI handles the rest — dependencies, Playwright browsers, everything.
 
 ---
 
@@ -32,61 +37,163 @@ It's built for **SDETs, QA engineers, and agent-first teams** who want a QA comp
 
 | Capability | What it does |
 |-----------|--------------|
-| **🧠 Self-evolving** | Learns from every run — failures, patterns, app structure — and applies knowledge to future tests |
-| **📋 Test planning** | Given a description or spec, produces structured test plans with edge cases |
-| **🤖 Playwright execution** | Runs tests, takes screenshots, captures network logs, diagnoses failures with AI |
-| **🗂️ Knowledge memory** | Remembers app structure, recurring issues, and test patterns across sessions and projects |
-| **📊 CTRF reports** | Every run produces a standard `result.ctrf.json` — CI-friendly, tool-portable |
-| **🧩 Agent skill** | Packaged as an [agentskills.io](https://agentskills.io) skill — works with any compatible host |
-| **📤 Knowledge export** | Export accumulated knowledge as mem0 JSON, CTRF bundle, or raw brain dump |
-| **🔌 Adapter architecture** | Plug in different browsers, executors, ingestors, and reporters |
+| **🧠 Mentored learning** | Like a QA intern you're training — describe what to test in plain language, it figures out the rest and gets better with every project |
+| **🔍 Proactive exploration** | Doesn't wait for instructions. It navigates your app, maps out pages, discovers workflows on its own |
+| **📋 Natural language cases** | Describe a test in one sentence: "user logs in and checks the dashboard." No step-by-step format needed. |
+| **🤖 Playwright execution** | Runs tests, captures screenshots, logs network traffic, diagnoses failures with AI |
+| **🔄 Reusable script generation** | After each run, the AI distills what it tested into ready-to-run Playwright `.spec.ts` files you can commit and reuse |
+| **🗂️ Business workflow memory** | Remembers real user journeys — not just selectors, but the business scenarios and end-to-end flows it discovered |
+| **📊 CTRF reports** | Every run produces a standard `result.ctrf.json` + self-contained HTML report |
+| **📤 Knowledge export** | Export accumulated experience as mem0 JSON or CTRF bundle — share with your team |
 
 ---
 
 ## 🚀 Quick start
 
+### Prerequisites
+
+- **Python 3.9+**
+- An **AI coding tool** that supports agentskills.io skills
+
+### Setup
+
+**Step 1:** Clone the skill:
+
 ```bash
-# 1. Install dependencies
-pip install playwright jinja2 pyyaml
-playwright install chromium
-
-# 2. Clone
 git clone https://github.com/<your-org>/evo-qa.git
-cd evo-qa
-
-# 3. Initialize a project
-python -m evo_qa.core.cli init myapp --url https://myapp.example.com
-
-# 4. Plan & run tests
-python -m evo_qa.core.cli plan myapp "Login flow then check dashboard"
-python -m evo_qa.core.cli run  myapp
-
-# 5. See the report
-python -m evo_qa.core.cli report myapp <run-id>
 ```
 
-> 💡 All commands have `--help`. Start there before diving into source code.
+**Step 2:** Tell your AI what to test.
+
+That's it. **Two steps.** The AI reads the skill manual, checks your environment, installs anything missing, and gets to work.
+
+> 💡 No need to know Playwright, browsers, or CTRF. Just describe what you want tested.
 
 ---
 
-## 📸 What a run looks like
+## 🎯 Demo: Testing TodoMVC
+
+Here's what happens when you tell your AI: *"Test the TodoMVC app at https://demo.playwright.dev/todomvc"*
+
+The AI probes the page, finds an input field, a todo list, and footer filters (All / Active / Completed). Then it plans and runs these scenarios — each described in **a single sentence of natural language, no step-by-step format**:
+
+---
+
+**TC-001 — Add a todo item**
+Type something into the input box and press Enter. The todo should appear in the list below, and the counter should update to show how many items remain.
+
+**TC-002 — Mark a todo as completed**
+With a few todos already in the list, click the checkbox next to one. It should show as checked, the count should decrease, and a "Clear completed" button should appear.
+
+**TC-003 — Filter by Active**
+Click the "Active" filter. Only uncompleted todos should be visible. Completed ones should be hidden.
+
+**TC-004 — Filter by Completed**
+Click the "Completed" filter. Only completed todos should show up. The URL should reflect the current view.
+
+**TC-005 — Clear completed todos**
+With at least one completed todo, click "Clear completed". All completed items should be removed, leaving the list empty.
+
+**TC-006 — Generate a test report**
+Ask the AI to produce the report. A self-contained HTML file with all results, screenshots, and AI diagnosis should be generated — usable offline with no server or CDN.
+
+---
+
+### Result
+
+| Case | Scenario | Status |
+|------|----------|--------|
+| TC-001 | Add a todo item | ✅ Passed |
+| TC-002 | Mark a todo as completed | ✅ Passed |
+| TC-003 | Filter by Active | ✅ Passed |
+| TC-004 | Filter by Completed | ✅ Passed |
+| TC-005 | Clear completed | ✅ Passed |
+| TC-006 | Generate HTML report | ✅ Passed |
+
+All evidence, screenshots, and reports are saved. The AI remembers what it learned for next time.
+
+**And it doesn't stop there.** After execution, the AI distills everything into **reusable Playwright test scripts** — ready-to-run `.spec.ts` files you can check into your repo, run in CI, or share with your team. Your natural language descriptions become automated tests, no manual translation needed.
+
+---
+
+## ⚙️ Workflow
 
 ```
-myapp/
-├── runs/
-│   └── 2026-06-20_153042/
-│       ├── result.ctrf.json       ← standardized test report
-│       ├── evidence/
-│       │   ├── step-01-login.png
-│       │   ├── step-02-dashboard.png
-│       │   └── network-log.har
-│       └── diagnosis.md           ← AI failure analysis
-├── brain/
-│   ├── system/                    ← mechanical facts about the app
-│   └── business/                  ← learned business logic
-└── plans/
-    └── login-flow.md             ← generated test plan
+You say "test this app"  →  AI + Evo QA  →  Reports out
+                                   │
+                        ┌──────────┼──────────┐
+                        ▼          ▼          ▼
+                    ① Probe    ② Plan     ③ Execute
+                        │          │          │
+                        ▼          ▼          ▼
+                  Snapshot DOM   Write      Run Playwright
+                  no guessing    plan.md    capture evidence
+                        │          │          │
+                        └──────────┼──────────┘
+                                   ▼
+                         ┌─── ④ Report ────┐
+                         │ CTRF JSON       │
+                         │ + HTML report   │
+                         └─────────────────┘
+                                   │
+                         ┌─── ⑤ Learn ─────┐
+                         │ Store in brain/ │
+                         │ Smarter next    │
+                         │ time            │
+                         └─────────────────┘
 ```
+
+| Step | What happens |
+|------|-------------|
+| **① Probe** | AI snapshots the page — reads actual DOM, no blind selectors |
+| **② Plan** | Produces a natural language test plan with scenarios |
+| **③ Execute** | Runs each scenario via Playwright, captures screenshots + network logs |
+| **④ Report** | Generates CTRF JSON + self-contained HTML report (offline, no CDN) |
+| **⑤ Script** | Distills test scenarios into reusable Playwright `.spec.ts` files |
+| **⑥ Learn** | Saves findings to `brain/`, so next project starts smarter |
+
+---
+
+## 🧠 Memory & Knowledge
+
+```
+     Project A                    Project B
+ ┌──────────────────┐      ┌──────────────────┐
+ │  brain/          │      │  brain/          │
+ │  ├─ system/      │      │  ├─ system/      │
+ │  ├─ business/    │      │  ├─ business/    │
+ │  └─ insights.md  │      │  └─ insights.md  │
+ └────────┬─────────┘      └────────┬─────────┘
+          │                         │
+          └────────┬────────────────┘
+                   │
+          ┌────────▼────────┐
+          │  cli export     │
+          │  → mem0 JSON    │
+          └────────┬────────┘
+                   │
+          ┌────────▼────────┐
+          │  New project /  │
+          │  New agent      │
+          │  inherits all   │
+          │  experience     │
+          └─────────────────┘
+
+     Shared across all projects:
+     📁 heuristics/  → SFDIPOT, RCRCRC testing patterns
+     📁 glossary/    → industry terms
+```
+
+| Memory type | Scope | What's stored |
+|-------------|-------|--------------|
+| **Project knowledge** | Per project (`brain/`) | Page structure, selectors, flows, past issues |
+| **Heuristics** | Shared across projects | Universal test patterns (boundary analysis, etc.) |
+| **Glossary** | Shared | Domain-specific terminology |
+| **Export** | Portable | `cli export --format mem0` — share with your team |
+
+> 📖 Knowledge follows [Google OKF (Open Knowledge Format)](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) spec.
+> Team members can export knowledge via `cli export` and import with `cli brain import`.
+> Testing experience is no longer personal — the whole team benefits.
 
 ---
 
@@ -94,19 +201,20 @@ myapp/
 
 | File | What it's for |
 |------|---------------|
-| [`SKILL.md`](SKILL.md) | Full operating manual — **start here** |
-| [`INSTALL.md`](INSTALL.md) | Detailed setup & first run |
-| [`CHANGELOG.md`](CHANGELOG.md) | What changed in each version |
-| [`ATTRIBUTION.md`](ATTRIBUTION.md) | Open-source credits & how to attribute |
-| [`references/VISION.md`](references/VISION.md) | Design philosophy & long-term roadmap |
+| [`SKILL.md`](SKILL.md) | Operating manual for your AI — **the AI reads this, not you** |
+| [`README.md`](README.md) | This file — human overview |
+| [`INSTALL.md`](INSTALL.md) | Manual setup reference |
+| [`CHANGELOG.md`](CHANGELOG.md) | Version history |
+| [`ATTRIBUTION.md`](ATTRIBUTION.md) | Open-source credits & attribution guide |
+| [`references/VISION.md`](references/VISION.md) | Design philosophy & roadmap |
 
 ---
 
 ## 🧪 Tested
 
 - **68 / 68 passing** (Python 3.11, Linux)
-- Python 3.10+
-- Playwright with Chromium (default)
+- Python 3.9+
+- Playwright with Chromium
 - Agentskills.io v1 compatible
 - CTRF v1.0 output
 
@@ -124,8 +232,8 @@ Attribution required — see [`ATTRIBUTION.md`](ATTRIBUTION.md) for details.
 Evo QA is in early beta. Contributions, issues, and ideas are welcome.
 
 - **Issues**: Bug reports, feature requests, questions
-- **PRs**: Please open an issue first to discuss what you'd like to change
-- **Style**: Follow the existing patterns — the project values clarity over cleverness
+- **PRs**: Open an issue first to discuss what you'd like to change
+- **Style**: Follow the existing patterns — clarity over cleverness
 
 ---
 
