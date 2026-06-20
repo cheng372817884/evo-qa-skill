@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ctrf.io/schemas/ctrf-v1.0.json",
+  "title": "Common Test Report Format v1.0 (Evo QA subset)",
+  "description": "Minimal subset of CTRF v1.0 used by Evo QA. Full spec: https://ctrf.io",
+  "type": "object",
+  "required": ["results"],
+  "properties": {
+    "reportFormat": {"type": "string", "const": "CTRF"},
+    "specVersion": {"type": "string"},
+    "reportId": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "generatedBy": {"type": "string"},
+    "results": {
+      "type": "object",
+      "required": ["tool", "summary", "tests"],
+      "properties": {
+        "tool": {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": {"type": "string"},
+            "version": {"type": "string"}
+          }
+        },
+        "summary": {
+          "type": "object",
+          "required": ["tests", "passed", "failed", "pending", "skipped", "other", "start", "stop"],
+          "properties": {
+            "tests": {"type": "integer", "minimum": 0},
+            "passed": {"type": "integer", "minimum": 0},
+            "failed": {"type": "integer", "minimum": 0},
+            "pending": {"type": "integer", "minimum": 0},
+            "skipped": {"type": "integer", "minimum": 0},
+            "other": {"type": "integer", "minimum": 0},
+            "start": {"type": "integer"},
+            "stop": {"type": "integer"}
+          }
+        },
+        "tests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "status", "duration"],
+            "properties": {
+              "name": {"type": "string"},
+              "status": {"type": "string", "enum": ["passed", "failed", "skipped", "pending", "other"]},
+              "duration": {"type": "integer", "minimum": 0},
+              "start": {"type": "integer"},
+              "stop": {"type": "integer"},
+              "suite": {"type": "string"},
+              "message": {"type": "string"},
+              "trace": {"type": "string"},
+              "rawStatus": {"type": "string"},
+              "tags": {"type": "array", "items": {"type": "string"}},
+              "type": {"type": "string"},
+              "filepath": {"type": "string"},
+              "retries": {"type": "integer", "minimum": 0},
+              "flaky": {"type": "boolean"},
+              "browser": {"type": "string"},
+              "device": {"type": "string"},
+              "screenshot": {"type": "string"},
+              "parameters": {"type": "object"},
+              "steps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {"type": "string"},
+                    "status": {"type": "string"}
+                  }
+                }
+              },
+              "ai": {"type": "string", "description": "AI-generated diagnosis (CTRF v1.0 native field)"},
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "contentType", "path"],
+                  "properties": {
+                    "name": {"type": "string"},
+                    "contentType": {"type": "string"},
+                    "path": {"type": "string"},
+                    "extra": {"type": "object"}
+                  }
+                }
+              },
+              "extra": {"type": "object"}
+            }
+          }
+        },
+        "environment": {"type": "object"},
+        "extra": {"type": "object"}
+      }
+    },
+    "extra": {
+      "type": "object",
+      "description": "Top-level extra. Evo QA uses extra.evoQa for non-spec fields.",
+      "properties": {
+        "evoQa": {
+          "type": "object",
+          "properties": {
+            "promptHistory": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["timestamp", "role", "content"],
+                "properties": {
+                  "timestamp": {"type": "string", "format": "date-time"},
+                  "role": {"type": "string", "enum": ["user", "assistant", "system"]},
+                  "content": {"type": "string"}
+                }
+              }
+            },
+            "schemaVersion": {"type": "string"},
+            "skillVersion": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}
