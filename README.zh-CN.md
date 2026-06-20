@@ -12,6 +12,10 @@
 </p>
 
 <p align="center">
+  🌐 <a href="README.md">English</a> | <a href="README.zh-CN.md">中文</a>
+</p>
+
+<p align="center">
   <a href="#-快速开始">快速开始</a> ·
   <a href="#-特性">特性</a> ·
   <a href="#-一次运行的产物">运行产物</a> ·
@@ -53,7 +57,7 @@ Evo QA 翻转了这个模型：
 | **🤖 Playwright 执行** | 运行测试、截取截图、捕获网络日志、用 AI 诊断失败原因 |
 | **🗂️ 知识记忆** | 跨会话、跨项目记住应用结构、反复出现的问题和测试模式 |
 | **📊 CTRF 报告** | 每次运行生成标准的 `result.ctrf.json` —— CI 友好、工具可移植 |
-| **🧩 Agent 技能** | 打包为 [agentskills.io](https://agentskills.io) 技能，兼容任何支持 Agent 的主机 |
+| **🧩 Agent 技能** | 打包为 agentskills.io 技能，兼容任何支持 Agent 的主机 |
 | **📤 知识导出** | 将积累的知识导出为 mem0 JSON、CTRF 包或原始脑图转储 |
 | **🔌 适配器架构** | 可插拔浏览器、执行器、信息摄取器和报告器 |
 
@@ -61,27 +65,31 @@ Evo QA 翻转了这个模型：
 
 ## 🚀 快速开始
 
+Evo QA 是一个 **Agent 技能**，运行在兼容的 Agent 主机中（例如 CoPaw）。
+
+### 安装技能
+
 ```bash
-# 1. 安装依赖
-pip install playwright jinja2 pyyaml
-playwright install chromium
+# 通过 agentskills.io 安装（推荐）
+copaw skill install evo-qa
 
-# 2. 克隆
-git clone https://github.com/<your-org>/evo-qa.git
-cd evo-qa
-
-# 3. 初始化项目
-python -m evo_qa.core.cli init myapp --url https://myapp.example.com
-
-# 4. 规划并运行测试
-python -m evo_qa.core.cli plan myapp "登录流程然后检查仪表盘"
-python -m evo_qa.core.cli run  myapp
-
-# 5. 查看报告
-python -m evo_qa.core.cli report myapp <run-id>
+# 或手动克隆配置
+git clone https://github.com/cheng372817884/evo-qa-skill.git
 ```
 
-> 💡 所有命令都支持 `--help`。从那里开始，再深入源码。
+### 使用方式
+
+安装后，对你的 Agent 主机说一句：
+
+> "测试一下 https://example.com 的登录流程"
+
+Evo QA 就会自动：
+1. 分析页面并规划测试
+2. 用 Playwright 执行测试
+3. 截图并捕获网络日志
+4. 生成结构化的 CTRF 报告
+
+不用写测试脚本。不用维护 CI 流水线。告诉它测什么就行。
 
 ---
 
