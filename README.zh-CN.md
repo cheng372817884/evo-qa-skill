@@ -1,4 +1,5 @@
 <p align="center">
+  <a href="https://skills.sh/cheng372817884/evo-qa-skill"><img src="https://skills.sh/b/cheng372817884/evo-qa-skill" alt="skills.sh"></a>
   <img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python">
   <img src="https://img.shields.io/badge/status-beta-yellow" alt="Status">
@@ -6,6 +7,10 @@
 
 <h1 align="center">🧪 Evo QA</h1>
 <p align="center"><strong>一个自我进化的 QA Agent——学习你的应用、规划测试、运行 Playwright、跨项目记忆。</strong></p>
+
+<p align="center">
+  <code>npx skills add cheng372817884/evo-qa-skill</code>
+</p>
 
 <p align="center">
   不是测试运行器。是一个装在盒子里的、不断进化的 QA 工程师。
@@ -69,8 +74,11 @@ Evo QA 是一个 **Agent 技能**，运行在兼容的 Agent 主机中（例如 
 
 ### 安装技能
 
-1. [下载最新 ZIP 包](https://github.com/cheng372817884/evo-qa-skill/archive/refs/heads/main.zip)
-2. 解压后以 skill 方式导入到你的 AI 客户端即可
+```bash
+npx skills add cheng372817884/evo-qa-skill
+```
+
+> 或 [下载最新 ZIP 包](https://github.com/cheng372817884/evo-qa-skill/archive/refs/heads/main.zip) 解压后手动以 skill 文件夹导入到你的 AI 客户端。
 
 安装后，对你的 Agent 主机说一句：
 

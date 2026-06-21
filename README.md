@@ -58,8 +58,11 @@ Evo QA is an **agent skill** designed to run inside a compatible agent host (e.g
 
 ### Install the skill
 
-1. [Download the latest ZIP](https://github.com/cheng372817884/evo-qa-skill/archive/refs/heads/main.zip)
-2. Extract and import the folder into your AI client as a skill
+```bash
+npx skills add cheng372817884/evo-qa-skill
+```
+
+> Or [download the latest ZIP](https://github.com/cheng372817884/evo-qa-skill/archive/refs/heads/main.zip) and manually import it as a skill folder into your AI client.
 
 ### Use it
 
