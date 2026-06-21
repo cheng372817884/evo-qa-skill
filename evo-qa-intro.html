@@ -54,6 +54,14 @@ function Stage(props){
     function upd(){setScale(Math.min(window.innerWidth/width,(window.innerHeight-56)/height));}
     upd();window.addEventListener('resize',upd);return ()=>window.removeEventListener('resize',upd);
   },[width,height]);
+  // Expose seek function globally for CDP frame capture
+  window.__seekTo = (t) => { setTime(Math.max(0, Math.min(duration, t))); setPlaying(false); };
+  // Listen for seek custom event
+  useEffect(() => {
+    const handler = (e) => window.__seekTo(e.detail);
+    window.addEventListener('evo-seek', handler);
+    return () => window.removeEventListener('evo-seek', handler);
+  }, [duration]);
   useEffect(()=>{
     if(!playing)return;
     let cn=false,last=null,first=true;

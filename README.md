@@ -22,6 +22,14 @@
 
 ---
 
+<p align="center">
+  <video src="evo-qa-intro.mp4" width="720" autoplay loop muted playsinline></video>
+  <br>
+  <sub>👆 Evo QA 18s product intro animation (1920×1080)</sub>
+</p>
+
+---
+
 ## Why Evo QA?
 
 Most QA automation is **write once, maintain forever**. You write tests, the app changes, tests break, you fix them. Repeat forever.

@@ -31,7 +31,7 @@
 ---
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/evo-qa-intro.mp4" width="720" autoplay loop muted playsinline></video>
+  <video src="evo-qa-intro.mp4" width="720" autoplay loop muted playsinline></video>
   <br>
   <sub>👆 Evo QA 18 秒产品介绍动画（1920×1080）</sub>
 </p>
